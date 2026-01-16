@@ -106,8 +106,42 @@ All data is stored locally using `localStorage`.
   - `useGame` – Game logic
   - `useTimer` – Timer control
   - `useLocalStorage` – Persistent storage
-
+  - 'usePlayer' 
 ---
+##  Project Structure
+
+src/
+├── components/
+│   ├── Card.jsx           # Single memory card
+│   ├── GameBoard.jsx      # Grid of cards
+│   ├── GameSetup.jsx      # Player setup, theme & difficulty selection
+│   ├── Navigation.jsx    # Top navigation bar
+│   ├── ScoreDisplay.jsx  # Score and miss tracking
+│   └── Timer.jsx         # Countdown timer UI
+│
+├── context/
+│   ├── GameContext.jsx   # Core game state and rules
+│   └── PlayerContext.jsx # Player data and leaderboard persistence
+│
+├── hooks/
+│   ├── useGame.js        # Game logic abstraction
+│   ├── useTimer.js       # Timer logic abstraction
+│   |── useLocalStorage.js# Persistent storage helper
+│   |__usePlayer.jsx
+├── pages/
+│   ├── Home.jsx          # Game setup screen
+│   ├── Game.jsx          # Active gameplay screen
+│   ├── GameOver.jsx      # End-game summary
+│   ├── Leaderboard.jsx  # Scores and player history
+│   └── NotFound.jsx     # Fallback route
+│
+├── utils/
+│   └── buildDeck.js      # Image fetching and card deck creation
+│
+├── App.jsx               # App shell and routing
+├── main.jsx              # React entry point
+|── App.css               # Global styles
+|_index.css
 
 ##  Tech Stack
 
@@ -130,3 +164,5 @@ npm run dev
 ## Then open:
 http://localhost:5173
 
+---
+##  Deployment
