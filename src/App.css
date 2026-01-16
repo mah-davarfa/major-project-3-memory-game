@@ -1,0 +1,243 @@
+
+
+#root {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  text-align: left;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main area under nav */
+.page-shell {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Constrain content width */
+.page-content {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Base page styling */
+.page {
+  text-align: center;
+  padding: 0.5rem 0.25rem 2rem;
+}
+
+/*
+  “Lower-middle” placement:
+  - keeps nav close to content (small top offset)
+  - avoids too much empty bottom space on tall screens
+*/
+.page-lower {
+  margin-top: clamp(2rem, 4vh, 3rem);
+}
+
+/*
+  “More centered” placement:
+  - used for Leaderboard ( not stuck to the top)
+  - still keeps nav reasonably close
+*/
+.page-center {
+  margin-top: clamp(2rem, 8vh, 6rem);
+}
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  align-items: center;
+
+  padding: 0.65rem 0.9rem;
+  margin: 0;                 /* remove extra separation */
+  margin-bottom: 0.5rem;     /* keep nav close to page content */
+  margin-top: 6rem;
+
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  backdrop-filter: blur(6px);
+}
+
+nav a {
+  padding: 0.45rem 0.75rem;
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+nav a:hover {
+  background: rgba(43, 91, 215, 0.08);
+  text-decoration: none;
+}
+
+nav a[aria-current="page"] {
+  background: rgba(43, 91, 215, 0.14);
+  border: 1px solid rgba(43, 91, 215, 0.25);
+}
+
+/* =========================
+   READABILITY (GameSetup paragraph)
+   ========================= */
+
+.page p {
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Only GameSetup instructions should be left-aligned */
+.instructions {
+  text-align: left;
+  line-height: 1.65;
+  opacity: 0.92;
+}
+
+/* Center helper for validation messages */
+.hint {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hint.error {
+  color: #ff4d4f;
+  font-weight: 700;
+}
+
+/* Selected button effect (theme + difficulty) */
+.btn-choice.is-selected {
+  border-color: rgba(43, 91, 215, 0.85);
+  outline: 3px solid rgba(43, 91, 215, 0.18);
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   FORMS + CONTROLS
+   ========================= */
+
+form {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0.75rem auto 0;
+  max-width: 520px;
+  justify-items: center;
+}
+
+label {
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+input,
+select {
+  max-width: 280px;
+}
+
+button {
+  margin: 0.25rem;
+}
+
+/* =========================
+   GAME BOARD GRID
+   ========================= */
+
+
+div:has(> button.card) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+/* CARD STYLES */
+.card {
+  position: relative;
+  padding: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+  aspect-ratio: 3 / 4;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.card.flipped {
+  outline: 3px solid rgba(43, 91, 215, 0.18);
+  border-color: rgba(43, 91, 215, 0.35);
+  transform: translateY(-1px);
+}
+
+/* TABLES */
+table {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+th {
+  text-align: left;
+  background: rgba(43, 91, 215, 0.08);
+}
+
+td,
+th {
+  vertical-align: top;
+}
+
+/* =========================
+   DARK MODE
+   ========================= */
+
+@media (prefers-color-scheme: dark) {
+  nav {
+    background: rgba(21, 26, 34, 0.75);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  nav a:hover {
+    background: rgba(143, 177, 255, 0.261);
+  }
+
+  nav a[aria-current="page"] {
+    background: rgba(143, 177, 255, 0.16);
+    border-color: rgba(143, 177, 255, 0.28);
+  }
+
+  .card {
+    background: rgba(21, 26, 34, 0.92);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+  }
+
+  table {
+    background: rgba(21, 26, 34, 0.88);
+  }
+
+  th {
+    background: rgba(143, 177, 255, 0.10);
+  }
+}
