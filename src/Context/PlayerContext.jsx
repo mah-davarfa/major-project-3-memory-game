@@ -15,10 +15,20 @@ export function PlayerContextProvider({ children }) {
     setPlayersGame({});
     setPlayer(null);
   }
-  // Add a new player
-  const addPlayer = (name) => {
+ 
+   // Add a new player OR select existing player by name
+    const addPlayer = (name) => {
+      const normalized = String(name || "").trim();
+      if (!normalized) return { ok: false, reason: "empty" };
+
+      const existing = (playersData || []).find(p=> String(p?.name|| '').trim().toLowerCase()=== normalized.toLowerCase())  
+
+      if(existing){
+          setPlayer(existing);
+          return { ok: true, reused: true, player: existing };
+        }
     const newPlayer = {
-      name,
+       name: normalized,
       id: Date.now(),
       numberOfGames:0
     };
@@ -26,6 +36,7 @@ export function PlayerContextProvider({ children }) {
     setPlayer(newPlayer);   
 
     setPlayersData((prev) => [...prev, newPlayer]);
+    return { ok: true, reused: false, player: newPlayer };
   };
 
   // Increment number of games for current player

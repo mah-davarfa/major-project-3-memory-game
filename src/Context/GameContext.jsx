@@ -211,6 +211,7 @@ const flipCard = useCallback(
     setTimeUserChoosed(null);
     setGameResult(null);
     setTimeLeftMs(null);
+    setChoosenDelay(1000);
   }, []);
 
   // Derived (human-readable) timer for UI using useMemo() because only runs when timeLeftMs changes not on every render

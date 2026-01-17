@@ -37,6 +37,7 @@ export default function GameSetup() {
 
   const [selectedTheme, setSelectedTheme] = useState("");
   const [selectedLevel, setSelectedLevel] = useState(null);
+  const [welcomeMessage, setWelcomeMessage] = useState("");
 
 
   const apiMap = { dog: getDogs, cat: getCats, random: getRandom };
@@ -49,10 +50,21 @@ export default function GameSetup() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
+    useEffect(() => {
+      setWelcomeMessage("");
+    }, [nameInput]);
+
   const handlePlayerSubmit = () => {
     const name = nameInput.trim();
     if (!name) return;
-    addPlayer(name);
+    const result = addPlayer(name);
+
+    if(result?.reused){
+      setWelcomeMessage(`Welcome back, ${result.player.name}`);
+    }else{
+      setWelcomeMessage('')
+    }
   };
 
   const handleTimeSubmit = (e) => {
@@ -66,6 +78,7 @@ const handleTheme = async (pick) => {
   setTheme(pick);
   setSelectedTheme(pick);
   setLoading(true);
+  setThemePicked(false);
 
   const deck = await apiMap[pick]();
 
@@ -73,11 +86,13 @@ const handleTheme = async (pick) => {
 
   if (!Array.isArray(deck)) {
     setError(deck?.message || "Failed to load images");
+    setThemePicked(false);
     return;
   }
 
   if (deck.length === 0) {
     setError("No images returned from API");
+    setThemePicked(false);
     return;
   }
 
@@ -125,6 +140,9 @@ const handleLevel = (max) => {
           onChange={(e) => setNameInput(e.target.value)}
         />
         <button onClick={handlePlayerSubmit}>Save Player</button>
+        {welcomeMessage && (
+            <p className="welcome-message">{welcomeMessage}</p>
+          )}
 
         <h3>Challenge your memory: choose the face‑up duration to memorize (seconds)</h3>
         <input
@@ -206,9 +224,13 @@ const handleLevel = (max) => {
             ))}
           </select>
 
-          <button type="submit" disabled={!player || loading}>
-            Start Game
+          <button
+              type="submit"
+              disabled={!player || loading || !!error || !themePicked || !levelPicked}
+            >
+              Start Game
           </button>
+
         </form>
 
         {!player && <p className="hint error">Please save a player name first.</p>}

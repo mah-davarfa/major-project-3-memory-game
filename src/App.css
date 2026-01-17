@@ -241,3 +241,8 @@ th {
     background: rgba(143, 177, 255, 0.10);
   }
 }
+.welcome-message {
+  margin-top: 0.5rem;
+  font-weight: 600;
+  color: #2b5bd7;
+}
