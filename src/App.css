@@ -204,7 +204,12 @@ div:has(> button.card) {
   border-color: rgba(43, 91, 215, 0.35);
   transform: translateY(-1px);
 }
-
+button.card:disabled {
+  opacity: 1;
+}
+button.card:disabled img {
+  opacity: 1;
+}
 /* TABLES */
 table {
   width: 100%;
