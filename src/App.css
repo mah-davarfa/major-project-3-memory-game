@@ -67,7 +67,7 @@ nav {
   margin-top: 6rem;
 
   background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(95, 95, 89, 0.35);
   border-radius: 14px;
   backdrop-filter: blur(6px);
 }
@@ -87,7 +87,7 @@ nav a:hover {
 
 nav a[aria-current="page"] {
   background: rgba(43, 91, 215, 0.14);
-  border: 1px solid rgba(43, 91, 215, 0.25);
+  border: 1px solid rgba(43, 91, 215, 0.35);
 }
 
 /* =========================
@@ -230,7 +230,7 @@ th {
 @media (prefers-color-scheme: dark) {
   nav {
     background: rgba(21, 26, 34, 0.75);
-    border-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.35);
   }
 
   nav a:hover {
