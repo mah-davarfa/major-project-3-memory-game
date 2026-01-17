@@ -124,8 +124,8 @@ src/
 │   └── PlayerContext.jsx # Player data and leaderboard persistence
 │
 ├── hooks/
-│   ├── useGame.js        # Game logic abstraction
-│   ├── useTimer.js       # Timer logic abstraction
+│   ├── useGame.jsx        # Game logic abstraction
+│   ├── useTimer.jsx       # Timer logic abstraction
 │   |── useLocalStorage.js# Persistent storage helper
 │   |__usePlayer.jsx
 ├── pages/
