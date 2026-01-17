@@ -106,6 +106,13 @@ nav a[aria-current="page"] {
   line-height: 1.65;
   opacity: 0.92;
 }
+.instructions-1 {
+  text-align: left;
+  line-height: 1.65;
+  opacity: 0.92;
+  font-weight: bolder;
+  color: #7aa84f;
+}
 
 /* Center helper for validation messages */
 .hint {
@@ -152,6 +159,14 @@ select {
 button {
   margin: 0.25rem;
 }
+.player-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap; 
+}
+
 
 /* =========================
    GAME BOARD GRID
@@ -243,6 +258,6 @@ th {
 }
 .welcome-message {
   margin-top: 0.5rem;
-  font-weight: 600;
+  font-weight: 1000;
   color: #2b5bd7;
 }

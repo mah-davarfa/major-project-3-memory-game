@@ -132,18 +132,20 @@ const handleLevel = (max) => {
           Player need to match all cards in limited time that they choose,
           Easy = up to 6 miss-Match, Medium = up to 4 miss-Match Hard = up to 2 miss-Match
         </p>
-
-        <label>Enter Name</label>
-        <input
-          type="text"
-          value={nameInput}
-          onChange={(e) => setNameInput(e.target.value)}
-        />
-        <button onClick={handlePlayerSubmit}>Save Player</button>
-        {welcomeMessage && (
-            <p className="welcome-message">{welcomeMessage}</p>
-          )}
-
+    
+       <div className="player-row">
+          <label htmlFor="player-name">Enter Name</label>
+          <input
+            id="player-name"
+            type="text"
+            value={nameInput}
+            onChange={(e) => setNameInput(e.target.value)}
+          />
+          <button onClick={handlePlayerSubmit}>Save Player</button>
+       </div>
+                {welcomeMessage &&(
+          <p className='welcome-message'>{welcomeMessage}</p>
+        )}
         <h3>Challenge your memory: choose the face‑up duration to memorize (seconds)</h3>
         <input
           type="number"
