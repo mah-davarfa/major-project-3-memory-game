@@ -39,7 +39,7 @@
   - avoids too much empty bottom space on tall screens
 */
 .page-lower {
-  margin-top: clamp(2rem, 4vh, 3rem);
+  margin-top: clamp(2rem, 4vh, 2rem);
 }
 
 /*
@@ -64,7 +64,7 @@ nav {
   padding: 0.65rem 0.9rem;
   margin: 0;                 /* remove extra separation */
   margin-bottom: 0.5rem;     /* keep nav close to page content */
-  margin-top: 6rem;
+  margin-top: 3rem;
 
   background: rgba(255, 255, 255, 0.75);
   border: 2px solid rgba(95, 95, 89, 0.35);
