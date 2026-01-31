@@ -129,7 +129,7 @@ nav a[aria-current="page"] {
 /* Selected button effect (theme + difficulty) */
 .btn-choice.is-selected {
   border-color: rgba(43, 91, 215, 0.85);
-  color:blue ;
+  color:rgb(0, 217, 255) ;
   outline: 3px solid rgba(43, 91, 215, 0.18);
   transform: translateY(-1px);
 }

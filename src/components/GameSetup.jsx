@@ -38,7 +38,7 @@ export default function GameSetup() {
   const [selectedTheme, setSelectedTheme] = useState("");
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [welcomeMessage, setWelcomeMessage] = useState("");
-
+  const [count, setCount] = useState(5);
 
   const apiMap = { dog: getDogs, cat: getCats, random: getRandom };
 
@@ -80,7 +80,7 @@ const handleTheme = async (pick) => {
   setLoading(true);
   setThemePicked(false);
 
-  const deck = await apiMap[pick]();
+  const deck = await apiMap[pick](count);
 
   setLoading(false);
 
@@ -152,6 +152,14 @@ const handleLevel = (max) => {
           value={choosenDelay/1000}
           min={1}
           onChange={(e) => setChoosenDelay(Number(e.target.value) * 1000)}
+        />
+        <h3>Choose number of pairs (2–10)— right now playing with total cards: {count * 2}</h3>
+        <input
+          type="number"
+          value={count}
+          min={2}
+          max={10}
+          onChange={(e) => setCount(Number(e.target.value) )}
         />
 
         <h3>Pick your Theme</h3>

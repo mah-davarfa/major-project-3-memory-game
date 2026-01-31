@@ -1,4 +1,4 @@
-export async function getDogs(count = 10) {
+export async function getDogs(count) {
   try {
     const response = await fetch(`https://dog.ceo/api/breeds/image/random/${count}`);
     if (!response.ok) throw new Error("Failed to fetch dog images");
@@ -14,7 +14,7 @@ export async function getDogs(count = 10) {
   }
 }
 
-export async function getRandom(count = 10) {
+export async function getRandom(count) {
   try {
     const response = await fetch(`https://picsum.photos/v2/list?page=2&limit=${count}`);
     if (!response.ok) throw new Error("Failed to fetch random images");
@@ -30,7 +30,7 @@ export async function getRandom(count = 10) {
   }
 }
 
-export async function getCats(count = 10) {
+export async function getCats(count) {
   try {
     const response = await fetch(`https://api.thecatapi.com/v1/images/search?limit=${count}`);
     if (!response.ok) throw new Error("Failed to fetch cat images");
@@ -40,7 +40,7 @@ export async function getCats(count = 10) {
       throw new Error("Cat API returned invalid data");
     }
 
-    return data.map((cat) => ({ url: cat.url }));
+    return data.slice(0,count).map((cat) => ({ url: cat.url }));
   } catch (err) {
     return { error: true, message: err.message || "Unknown error fetching cats" };
   }
