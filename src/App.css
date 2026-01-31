@@ -90,7 +90,7 @@ nav a[aria-current="page"] {
   border: 1px solid rgba(43, 91, 215, 0.35);
 }
 
-/* =========================
+/* ==========================
    READABILITY (GameSetup paragraph)
    ========================= */
 
@@ -129,6 +129,7 @@ nav a[aria-current="page"] {
 /* Selected button effect (theme + difficulty) */
 .btn-choice.is-selected {
   border-color: rgba(43, 91, 215, 0.85);
+  color:blue ;
   outline: 3px solid rgba(43, 91, 215, 0.18);
   transform: translateY(-1px);
 }

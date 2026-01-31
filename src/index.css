@@ -53,11 +53,12 @@ p {
 
 button {
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(0, 0, 0, 0.52);
   padding: 0.55rem 0.9rem;
   font-size: 1rem;
   font-weight: 600;
   font-family: inherit;
+  color: #0f1115;
   background-color: #ffffff;
   cursor: pointer;
   transition: transform 120ms ease, border-color 120ms ease, background-color 120ms ease;
@@ -69,7 +70,7 @@ button:hover {
 }
 
 button:disabled {
-  opacity: 0.55;
+  opacity: 0.85;
   cursor: not-allowed;
   transform: none;
 }
