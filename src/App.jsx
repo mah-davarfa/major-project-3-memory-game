@@ -9,11 +9,13 @@ import Leaderboard from "./pages/Leaderboard";
 import NotFound from "./pages/NotFound";
 import "./App.css";
 
+
 function App() {
   return (
     <div className="app-shell">
+      
       <PlayerContextProvider>
-        <GameProvider>
+       <GameProvider>
           <Navigation />
 
           <main className="page-shell">

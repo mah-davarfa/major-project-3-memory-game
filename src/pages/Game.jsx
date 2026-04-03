@@ -76,11 +76,16 @@ export default function Game() {
   }
 return (
   <div className="page page-lower">
-    <h3>Memorizing The Cards position</h3>
-    <p>Player: {player?.name}</p>
-    <ScoreDisplay />
-    <GameBoard />
+    <div className="game-header">
+      <span>Player : {player.name}</span>
+      <span>Score: {score}</span>
+      <span>Misses: {misses}/{maxMisses}</span>
+      
+    </div>
     <Timer />
+      
+      <GameBoard />
+      
   </div>
 );
 }

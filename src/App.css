@@ -25,6 +25,7 @@
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
+  text-align: center;
 }
 
 /* Base page styling */
@@ -64,7 +65,7 @@ nav {
   padding: 0.65rem 0.9rem;
   margin: 0;                 /* remove extra separation */
   margin-bottom: 0.5rem;     /* keep nav close to page content */
-  margin-top: 3rem;
+  
 
   background: rgba(255, 255, 255, 0.75);
   border: 2px solid rgba(95, 95, 89, 0.35);
@@ -262,8 +263,102 @@ th {
     background: rgba(143, 177, 255, 0.10);
   }
 }
+
 .welcome-message {
   margin-top: 0.5rem;
   font-weight: 1000;
   color: #2b5bd7;
+  text-align: center;
+}
+
+.setup-grid{
+display:grid;
+grid-template-columns: repeat(auto-fit , minmax(300px,1fr));
+gap:1rem;
+}
+.card-section{
+  padding: 1rem;
+  border-radius: 16px;
+   border:1px solid rgba(95, 95, 89, 0.15);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(73, 70, 70, 0.068);
+  backdrop-filter: blur(8px);
+}
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border:1px solid rgba(95, 95, 89, 0.15);
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+ 
+}
+/* Modal */
+.modal-overlay {
+  position: fixed;
+ inset:0;
+ z-index: 9999;
+
+ display:flex;
+ align-items: center;
+ justify-content: center;
+
+   padding: 1rem;
+  background: rgba(15, 17, 21, 0.6);
+  backdrop-filter: blur(2px);
+}
+.modal-panel {
+  width: min(720px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+
+  border-radius: 18px;
+  border: 1px solid rgba(95, 95, 89, 0.2);
+  background: #ffffff;
+  color: #0f1115;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+
+  padding: 1rem 1rem 1.25rem;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.modal-btn-close {
+  flex-shrink: 0;
+  min-width: 42px;
+}
+
+.modal-content {
+  text-align: left;
+  line-height: 1.65;
+}
+
+.modal-content p {
+  max-width: none;
+  margin: 0.75rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .modal-panel {
+    background: #151a22;
+    color: rgba(255, 255, 255, 0.92);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-overLay {
+    background: rgba(0, 0, 0, 0.62);
+  }
+}
+.home-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
 }

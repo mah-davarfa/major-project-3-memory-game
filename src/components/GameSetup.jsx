@@ -31,7 +31,7 @@ export default function GameSetup() {
   const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(0);
   const [nameInput, setNameInput] = useState("");
-
+ const [isChangingPlayer, setIsChangingPlayer] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -55,17 +55,21 @@ export default function GameSetup() {
       setWelcomeMessage("");
     }, [nameInput]);
 
-  const handlePlayerSubmit = () => {
-    const name = nameInput.trim();
-    if (!name) return;
-    const result = addPlayer(name);
+const handlePlayerSubmit = () => {
+  const name = nameInput.trim();
+  if (!name) return;
 
-    if(result?.reused){
-      setWelcomeMessage(`Welcome back, ${result.player.name}`);
-    }else{
-      setWelcomeMessage('')
-    }
-  };
+  const result = addPlayer(name);
+
+  // if (result?.reused) {
+  //   setWelcomeMessage(`Welcome back, ${result.player.name}`);
+  // } else {
+  //   setWelcomeMessage("");
+  // }
+
+  setNameInput("");
+  setIsChangingPlayer(false);
+};
 
   const handleTimeSubmit = (e) => {
     e.preventDefault();
@@ -118,134 +122,147 @@ const handleLevel = (max) => {
   }, [themePicked, levelPicked, timeUserChoosed, player, setGameStatus, startGame, navigate]);
 
   return (
-    <div>
-      <div>
-        <p className="instructions">
-          When the game starts, all cards are face-up. Player get a few seconds to memorize positions.
-          After the preview time ends, all cards flip face-down. From this point on, the game begins.
-          rule:
-          Player clicks a card → it flips face-up
-          Player clicks a second card → it flips face-up
-          Game checks match
-          If match → stays face-up
-          If not match → Auto flip back down,
-          Player need to match all cards in limited time that they choose,
-          Easy = up to 6 miss-Match, Medium = up to 4 miss-Match Hard = up to 2 miss-Match
-        </p>
-    
-       <div className="player-row">
-          <label htmlFor="player-name">Enter Name</label>
-          <input
-            id="player-name"
-            type="text"
-            value={nameInput}
-            onChange={(e) => setNameInput(e.target.value)}
-          />
-          <button onClick={handlePlayerSubmit}>Save Player</button>
-       </div>
-                {welcomeMessage &&(
-          <p className='welcome-message'>{welcomeMessage}</p>
+    <div className="setup-grid">
+
+        {!player || isChangingPlayer ? (
+          <div className="player-row card-section">
+              <label htmlFor="player-name">Enter Name</label>
+              <input
+                id="player-name"
+                type="text"
+                value={nameInput}
+                onChange={(e) => setNameInput(e.target.value)}
+              />
+              <button onClick={handlePlayerSubmit}>Save Player</button>
+
+              {player && (
+                <button type="button" onClick={() => setIsChangingPlayer(false)}>
+                  Cancel
+                </button>
+              )}
+          </div>
+        ) : (
+              <div className="card-section">
+                <h3>Current Player</h3>
+                <p>{player.name}</p>
+                <button 
+                type="button" onClick={() => setIsChangingPlayer(true)}>
+                  Switch Player
+                </button>
+              </div>
         )}
-        <h3>Challenge your memory: choose the face‑up duration to memorize (seconds)</h3>
-        <input
-          type="number"
-          value={choosenDelay/1000}
-          min={1}
-          onChange={(e) => setChoosenDelay(Number(e.target.value) * 1000)}
-        />
-        <h3>Choose number of pairs (2–10)— right now playing with total cards: {count * 2}</h3>
-        <input
-          type="number"
-          value={count}
-          min={2}
-          max={10}
-          onChange={(e) => setCount(Number(e.target.value) )}
-        />
-
-        <h3>Pick your Theme</h3>
-          <button
-            className={`btn-choice ${selectedTheme === "dog" ? "is-selected" : ""}`}
-            onClick={() => handleTheme("dog")}
-            disabled={loading}
-          >
-            Dog
-          </button>
-
-          <button
-            className={`btn-choice ${selectedTheme === "cat" ? "is-selected" : ""}`}
-            onClick={() => handleTheme("cat")}
-            disabled={loading}
-          >
-            Cat
-          </button>
-
-          <button
-            className={`btn-choice ${selectedTheme === "random" ? "is-selected" : ""}`}
-            onClick={() => handleTheme("random")}
-            disabled={loading}
-          >
-            Random
-          </button>
 
 
-        {loading && <p>Loading cards...</p>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
+    
 
-        <h3>Pick difficulty (max misses)</h3>
-        <button
-            className={`btn-choice ${selectedLevel === 6 ? "is-selected" : ""}`}
-            onClick={() => handleLevel(6)}
-          >
-            Easy
-        </button>
-        <button
-            className={`btn-choice ${selectedLevel === 4 ? "is-selected" : ""}`}
-            onClick={() => handleLevel(4)}
-          >
-            Medium
-        </button>
-        <button
-            className={`btn-choice ${selectedLevel === 2 ? "is-selected" : ""}`}
-            onClick={() => handleLevel(2)}
-          >
-            Hard
-        </button>
 
+      <div className="card-section">
+          <h3>Challenge your memory: choose the face‑up duration to memorize (seconds)</h3>
+          <input
+            type="number"
+            value={choosenDelay/1000}
+            min={1}
+            onChange={(e) => setChoosenDelay(Number(e.target.value) * 1000)}
+          />
+          <h3>Choose number of pairs (2–10)— right now playing with total cards: {count * 2}</h3>
+          <input
+            type="number"
+            value={count}
+            min={2}
+            max={10}
+            onChange={(e) => setCount(Number(e.target.value) )}
+          />
       </div>
 
-      <div>
-        <h2>How long do you need to finish the Game?</h2>
-        <form onSubmit={handleTimeSubmit}>
-          <label>Minutes:</label>
-          <select value={minutes} onChange={(e) => setMinutes(Number(e.target.value))}>
-            {[0, 1, 2, 3, 4].map((m) => (
-              <option key={m} value={m}>
-                {m}
-              </option>
-            ))}
-          </select>
-
-          <label>Seconds:</label>
-          <select value={seconds} onChange={(e) => setSeconds(Number(e.target.value))}>
-            {Array.from({ length: 60 }, (_, i) => i).map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
-
-          <button
-              type="submit"
-              disabled={!player || loading || !!error || !themePicked || !levelPicked}
+      <div className="card-section">
+            <h3>Pick your Theme</h3>
+            <button
+              className={`btn-choice ${selectedTheme === "dog" ? "is-selected" : ""}`}
+              onClick={() => handleTheme("dog")}
+              disabled={loading}
             >
-              Start Game
-          </button>
+              Dog
+            </button>
 
-        </form>
+            <button
+              className={`btn-choice ${selectedTheme === "cat" ? "is-selected" : ""}`}
+              onClick={() => handleTheme("cat")}
+              disabled={loading}
+            >
+              Cat
+            </button>
 
-        {!player && <p className="hint error">Please save a player name first.</p>}
+            <button
+              className={`btn-choice ${selectedTheme === "random" ? "is-selected" : ""}`}
+              onClick={() => handleTheme("random")}
+              disabled={loading}
+            >
+              Random
+            </button>
 
+
+          {loading && <p>Loading cards...</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
-    </div>
-  );
+
+
+      <div className="card-section">
+          <h3>Pick difficulty (max misses)</h3>
+          <button
+              className={`btn-choice ${selectedLevel === 6 ? "is-selected" : ""}`}
+              onClick={() => handleLevel(6)}
+            >
+              Easy
+          </button>
+          <button
+              className={`btn-choice ${selectedLevel === 4 ? "is-selected" : ""}`}
+              onClick={() => handleLevel(4)}
+            >
+              Medium
+          </button>
+          <button
+              className={`btn-choice ${selectedLevel === 2 ? "is-selected" : ""}`}
+              onClick={() => handleLevel(2)}
+            >
+              Hard
+          </button>
+      </div>
+
+
+      <div className="card-section"> 
+          <h2>How long do you need to finish the Game?</h2>
+          <form onSubmit={handleTimeSubmit}>
+            <label>Minutes:</label>
+            <select value={minutes} onChange={(e) => setMinutes(Number(e.target.value))}>
+                {[0, 1, 2, 3, 4].map((m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ))}
+            </select>
+
+            <label>Seconds:</label>
+            <select value={seconds} onChange={(e) => setSeconds(Number(e.target.value))}>
+                {Array.from({ length: 60 }, (_, i) => i).map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+            </select>
+      
+      
+              <button
+                  type="submit"
+                  disabled={!player || loading || !!error || !themePicked || !levelPicked}
+                >
+                  Start Game
+              </button>
+
+            </form>
+
+            {!player && <p className="hint error">Please save a player name first.</p>}
+        </div>
+   </div>
+  
+ );
 }
