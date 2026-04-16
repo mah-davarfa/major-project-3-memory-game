@@ -4,56 +4,65 @@ import useLocalStorage from "../hooks/useLocalStorage";
 export const PlayerContext = createContext();
 
 export function PlayerContextProvider({ children }) {
-  const [player, setPlayer] = useState(null);//{ name: "", id: "", numberOfGames: 0 }
+  const [player, setPlayer] = useState(null);
+  const [playersData, setPlayersData] = useLocalStorage("playersData", []);
+  const [playersGame, setPlayersGame] = useLocalStorage("playersGame", {});
 
-  const [playersData, setPlayersData] = useLocalStorage("playersData", []);//[{player1},{player2},... ] or  [ { name: "Ali", id: 123, numberOfGames: 3 }, { name: "Sara", id: 456, numberOfGames: 1 } ]
-  const [playersGame, setPlayersGame] = useLocalStorage("playersGame", {});//{playerId:{}} or { 123: [ { score: 10, difficulty: "Easy", theme: "dog", date: "...", misses: 2, result: "win" }, ... ], 456: [ { score: 5, difficulty: "Hard", theme: "cat", date: "...", misses: 4, result: "lose" } ] }
-  const clearPlayerStorage=()=>{
-    localStorage.removeItem('playersData')
-    localStorage.removeItem('playersGame')
+  const clearPlayerStorage = () => {
+    localStorage.removeItem("playersData");
+    localStorage.removeItem("playersGame");
     setPlayersData([]);
     setPlayersGame({});
     setPlayer(null);
-  }
- 
-   // Add a new player OR select existing player by name
-    const addPlayer = (name) => {
-      const normalized = String(name || "").trim();
-      if (!normalized) return { ok: false, reason: "empty" };
+  };
 
-      const existing = (playersData || []).find(p=> String(p?.name|| '').trim().toLowerCase()=== normalized.toLowerCase())  
+  const addPlayer = (name) => {
+    const normalized = String(name || "").trim();
+    if (!normalized) return { ok: false, reason: "empty" };
 
-      if(existing){
-          setPlayer(existing);
-          return { ok: true, reused: true, player: existing };
-        }
+    const existing = (playersData || []).find(
+      (p) => String(p?.name || "").trim().toLowerCase() === normalized.toLowerCase()
+    );
+
+    if (existing) {
+      setPlayer(existing);
+      return { ok: true, reused: true, player: existing };
+    }
+
     const newPlayer = {
-       name: normalized,
+      name: normalized,
       id: Date.now(),
-      numberOfGames:0
+      numberOfGames: 0,
     };
 
-    setPlayer(newPlayer);   
-
+    setPlayer(newPlayer);
     setPlayersData((prev) => [...prev, newPlayer]);
     return { ok: true, reused: false, player: newPlayer };
   };
 
-  // Increment number of games for current player
   const incrementPlayerDataGames = (playerId) => {
     setPlayersData((prev) =>
-      prev.map((p) =>                             //numberOfGames: numberOfGames +1 
+      prev.map((p) =>
         p.id === playerId ? { ...p, numberOfGames: p.numberOfGames + 1 } : p
-      )                                           //numberOfGames: p[numberOfGames] + 1 
+      )
     );
   };
-                                            //result
-  // Record a game result  { 123: [ { score: 10, difficulty: "Easy", theme: "dog", date: "...", misses: 2, result: "win" }, {...}]
+
   const recordGameResult = (playerId, gameResult) => {
     setPlayersGame((prev) => ({
       ...prev,
-      [playerId]: [...(prev[playerId] || []), gameResult]
+      [playerId]: [...(prev[playerId] || []), gameResult],
     }));
+  };
+
+  const saveGameForLeaderboard = (name, gameResult) => {
+    const result = addPlayer(name);
+    if (!result?.ok || !result.player) return result;
+
+    incrementPlayerDataGames(result.player.id);
+    recordGameResult(result.player.id, gameResult);
+
+    return { ok: true, player: result.player, reused: result.reused };
   };
 
   return (
@@ -66,7 +75,8 @@ export function PlayerContextProvider({ children }) {
         incrementPlayerDataGames,
         playersGame,
         recordGameResult,
-        clearPlayerStorage
+        saveGameForLeaderboard,
+        clearPlayerStorage,
       }}
     >
       {children}

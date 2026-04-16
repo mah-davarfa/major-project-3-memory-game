@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import {useState, useEffect} from 'react';
 import Navigation from "./components/Navigation";
 import { PlayerContextProvider } from "./Context/PlayerContext";
 import { GameProvider } from "./Context/GameContext";
@@ -11,12 +12,25 @@ import "./App.css";
 
 
 function App() {
+    const [colorMode, setColorMode] = useState(
+    () => localStorage.getItem("memory-game-color-mode") || "dark"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("memory-game-color-mode", colorMode);
+    document.documentElement.setAttribute("data-theme", colorMode);
+  }, [colorMode]);
+
+  const toggleColorMode = () => {
+    setColorMode((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
   return (
     <div className="app-shell">
       
       <PlayerContextProvider>
        <GameProvider>
-          <Navigation />
+          <Navigation colorMode={colorMode} onToggleColorMode={toggleColorMode} />
 
           <main className="page-shell">
             <div className="page-content">

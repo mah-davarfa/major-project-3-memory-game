@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useGame } from "../hooks/useGame";
-import ScoreDisplay from "../components/ScoreDisplay";
 import GameBoard from "../components/GameBoard";
 import Timer from "../components/Timer";
 import { usePlayer } from "../hooks/usePlayer";
@@ -17,12 +16,10 @@ export default function Game() {
     timeLeftMs,
   } = useGame();
 
-  const { recordGameResult, incrementPlayerDataGames, player } = usePlayer();
+  const { player } = usePlayer();
   const didSaveRef = useRef(false);
 
   useEffect(() => {
-    if (!player) return;
-
     const isFinished = gameStatus === "won" || gameStatus === "lost";
     if (!isFinished) return;
 
@@ -34,7 +31,6 @@ export default function Game() {
     if (maxMisses === 4) difficulty = "Medium";
     if (maxMisses === 2) difficulty = "Hard";
 
-    // Determine why the user lost (timeout vs misses)
     let lossReason = null;
     if (gameStatus === "lost") {
       const timedOut = typeof timeLeftMs === "number" && timeLeftMs <= 0;
@@ -52,40 +48,29 @@ export default function Game() {
       date: Date.now(),
       misses,
       result: gameStatus,
-      lossReason, // null for wins, string for losses
+      lossReason,
     };
 
     setGameResult(newGameResult);
-    incrementPlayerDataGames(player.id);
-    recordGameResult(player.id, newGameResult);
-  }, [
-    gameStatus,
-    player,
-    maxMisses,
-    theme,
-    score,
-    misses,
-    timeLeftMs,
-    setGameResult,
-    incrementPlayerDataGames,
-    recordGameResult,
-  ]);
+  }, [gameStatus, maxMisses, theme, score, misses, timeLeftMs, setGameResult]);
 
   if (gameStatus === "won" || gameStatus === "lost") {
     return <Navigate to="/game-over" replace />;
   }
-return (
-  <div className="page page-lower">
-    <div className="game-header">
-      <span>Player : {player.name}</span>
-      <span>Score: {score}</span>
-      <span>Misses: {misses}/{maxMisses}</span>
-      
-    </div>
-    <Timer />
-      
+
+  return (
+    <div className="page page-lower">
+      <div className="game-header">
+        <span>Player: {player?.name || "Guest"}</span>
+        <span>Theme: {theme || "Random"}</span>
+        <span>Score: {score}</span>
+        <span>
+          Misses: {misses}/{maxMisses}
+        </span>
+      </div>
+
+      <Timer />
       <GameBoard />
-      
-  </div>
-);
+    </div>
+  );
 }

@@ -2,11 +2,8 @@
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  
   color: #213547;
   background-color: #f8f8f8e7;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -17,7 +14,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -25,10 +23,9 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-
-  
   display: block;
   background: #f6f7fb;
+  color: #213547;
 }
 
 a {
@@ -41,7 +38,10 @@ a:hover {
   text-decoration: underline;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   margin: 0.75rem 0;
   line-height: 1.2;
 }
@@ -49,7 +49,6 @@ h1, h2, h3, h4 {
 p {
   margin: 0.5rem 0;
 }
-
 
 button {
   border-radius: 10px;
@@ -75,44 +74,46 @@ button:disabled {
   transform: none;
 }
 
-input, select {
+input,
+select {
   padding: 0.55rem 0.7rem;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.26);
   font: inherit;
   background: #fff;
-  margin: .05rem;
+  margin: 0.05rem;
+  color: #0f1115;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
   outline: 3px solid rgba(43, 91, 215, 0.18);
   border-color: rgba(43, 91, 215, 0.65);
 }
 
-/* Dark mode (simple) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: rgba(255, 255, 255, 0.92);
-    background-color: #0f1115;
-  }
+html[data-theme="dark"] {
+  color: rgba(255, 255, 255, 0.92);
+  background-color: #0f1115;
+}
 
-  body {
-    background: #0f1115;
-  }
+html[data-theme="dark"] body {
+  background: #0f1115;
+  color: rgba(255, 255, 255, 0.92);
+}
 
-  a {
-    color: #8fb1ff;
-  }
+html[data-theme="dark"] a {
+  color: #8fb1ff;
+}
 
-  button {
-    background-color: #151a22;
-    border-color: rgba(255, 255, 255, 0.22);
-    color: rgba(255, 255, 255, 0.92);
-  }
+html[data-theme="dark"] button {
+  background-color: #151a22;
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.92);
+}
 
-  input, select {
-    background-color: #151a22;
-    border-color: rgba(255, 255, 255, 0.20);
-    color: rgba(255, 255, 255, 0.92);
-  }
+html[data-theme="dark"] input,
+html[data-theme="dark"] select {
+  background-color: #151a22;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.92);
 }

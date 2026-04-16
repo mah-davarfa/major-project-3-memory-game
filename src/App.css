@@ -1,5 +1,3 @@
-
-
 #root {
   max-width: 1100px;
   margin: 0 auto;
@@ -13,14 +11,12 @@
   flex-direction: column;
 }
 
-/* Main area under nav */
 .page-shell {
   flex: 1;
   display: flex;
   justify-content: flex-start;
 }
 
-/* Constrain content width */
 .page-content {
   width: 100%;
   max-width: 900px;
@@ -28,45 +24,39 @@
   text-align: center;
 }
 
-/* Base page styling */
 .page {
   text-align: center;
   padding: 0.5rem 0.25rem 2rem;
 }
 
-/*
-  “Lower-middle” placement:
-  - keeps nav close to content (small top offset)
-  - avoids too much empty bottom space on tall screens
-*/
 .page-lower {
   margin-top: clamp(2rem, 4vh, 2rem);
 }
 
-/*
-  “More centered” placement:
-  - used for Leaderboard ( not stuck to the top)
-  - still keeps nav reasonably close
-*/
 .page-center {
   margin-top: clamp(2rem, 8vh, 6rem);
 }
 
-/* =========================
-   NAVIGATION
-   ========================= */
+.top-shell {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
 
 nav {
   display: flex;
   justify-content: center;
   gap: 0.75rem;
   align-items: center;
-
   padding: 0.65rem 0.9rem;
-  margin: 0;                 /* remove extra separation */
-  margin-bottom: 0.5rem;     /* keep nav close to page content */
-  
-
+  margin: 0;
   background: rgba(255, 255, 255, 0.75);
   border: 2px solid rgba(95, 95, 89, 0.35);
   border-radius: 14px;
@@ -91,9 +81,9 @@ nav a[aria-current="page"] {
   border: 1px solid rgba(43, 91, 215, 0.35);
 }
 
-/* ==========================
-   READABILITY (GameSetup paragraph)
-   ========================= */
+.mode-toggle-btn {
+  min-width: 132px;
+}
 
 .page p {
   max-width: 780px;
@@ -101,21 +91,20 @@ nav a[aria-current="page"] {
   margin-right: auto;
 }
 
-/* Only GameSetup instructions should be left-aligned */
 .instructions {
   text-align: left;
   line-height: 1.65;
   opacity: 0.92;
 }
+
 .instructions-1 {
   text-align: left;
-  line-height: 1.65;
-  opacity: 0.92;
-  font-weight: bolder;
-  color: #7aa84f;
+  line-height: 1.7;
+  opacity: 0.98;
+  font-weight: 800;
+  color: #4c7a29;
 }
 
-/* Center helper for validation messages */
 .hint {
   text-align: center;
   margin-left: auto;
@@ -123,22 +112,16 @@ nav a[aria-current="page"] {
 }
 
 .hint.error {
-  color: #ff4d4f;
+  color: #c62828;
   font-weight: 700;
 }
 
-/* Selected button effect (theme + difficulty) */
 .btn-choice.is-selected {
   border-color: rgba(43, 91, 215, 0.85);
-  color:rgb(0, 217, 255) ;
+  color: rgb(0, 127, 173);
   outline: 3px solid rgba(43, 91, 215, 0.18);
   transform: translateY(-1px);
 }
-
-
-/* =========================
-   FORMS + CONTROLS
-   ========================= */
 
 form {
   display: grid;
@@ -161,19 +144,14 @@ select {
 button {
   margin: 0.25rem;
 }
+
 .player-row {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 }
-
-
-/* =========================
-   GAME BOARD GRID
-   ========================= */
-
 
 div:has(> button.card) {
   display: grid;
@@ -182,7 +160,6 @@ div:has(> button.card) {
   margin-top: 0.75rem;
 }
 
-/* CARD STYLES */
 .card {
   position: relative;
   padding: 0;
@@ -206,13 +183,15 @@ div:has(> button.card) {
   border-color: rgba(43, 91, 215, 0.35);
   transform: translateY(-1px);
 }
+
 button.card:disabled {
   opacity: 1;
 }
+
 button.card:disabled img {
   opacity: 1;
 }
-/* TABLES */
+
 table {
   width: 100%;
   background: rgba(255, 255, 255, 0.9);
@@ -230,40 +209,6 @@ th {
   vertical-align: top;
 }
 
-/* =========================
-   DARK MODE
-   ========================= */
-
-@media (prefers-color-scheme: dark) {
-  nav {
-    background: rgba(21, 26, 34, 0.75);
-    border-color: rgba(255, 255, 255, 0.35);
-  }
-
-  nav a:hover {
-    background: rgba(143, 177, 255, 0.261);
-  }
-
-  nav a[aria-current="page"] {
-    background: rgba(143, 177, 255, 0.16);
-    border-color: rgba(143, 177, 255, 0.28);
-  }
-
-  .card {
-    background: rgba(21, 26, 34, 0.92);
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
-  }
-
-  table {
-    background: rgba(21, 26, 34, 0.88);
-  }
-
-  th {
-    background: rgba(143, 177, 255, 0.10);
-  }
-}
-
 .welcome-message {
   margin-top: 0.5rem;
   font-weight: 1000;
@@ -271,53 +216,53 @@ th {
   text-align: center;
 }
 
-.setup-grid{
-display:grid;
-grid-template-columns: repeat(auto-fit , minmax(300px,1fr));
-gap:1rem;
+.setup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
 }
-.card-section{
+
+.card-section {
   padding: 1rem;
   border-radius: 16px;
-   border:1px solid rgba(95, 95, 89, 0.15);
-  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(95, 95, 89, 0.15);
+  background: rgba(255, 255, 255, 0.55);
   box-shadow: 0 10px 30px rgba(73, 70, 70, 0.068);
   backdrop-filter: blur(8px);
 }
+
 .game-header {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   padding: 1rem;
-  border:1px solid rgba(95, 95, 89, 0.15);
-  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(95, 95, 89, 0.15);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 12px;
- 
 }
-/* Modal */
+
 .modal-overlay {
   position: fixed;
- inset:0;
- z-index: 9999;
-
- display:flex;
- align-items: center;
- justify-content: center;
-
-   padding: 1rem;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
   background: rgba(15, 17, 21, 0.6);
   backdrop-filter: blur(2px);
 }
+
 .modal-panel {
   width: min(720px, 100%);
   max-height: 85vh;
   overflow-y: auto;
-
   border-radius: 18px;
   border: 1px solid rgba(95, 95, 89, 0.2);
   background: #ffffff;
   color: #0f1115;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
-
   padding: 1rem 1rem 1.25rem;
 }
 
@@ -344,21 +289,116 @@ gap:1rem;
   margin: 0.75rem 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  .modal-panel {
-    background: #151a22;
-    color: rgba(255, 255, 255, 0.92);
-    border-color: rgba(255, 255, 255, 0.14);
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
-  }
-
-  .modal-overLay {
-    background: rgba(0, 0, 0, 0.62);
-  }
+.intro-page {
+  min-height: 68vh;
+  display: grid;
+  place-items: center;
 }
+
+.intro-card {
+  width: min(760px, 100%);
+  padding: 2rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(95, 95, 89, 0.15);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+}
+
+.intro-copy {
+  font-size: 1.05rem;
+  margin-top: 1rem;
+}
+
+.intro-list {
+  width: fit-content;
+  margin: 0.75rem auto 0;
+}
+
+.intro-actions,
+.game-over-actions,
+.modal-actions-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.game-over-card {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.result-summary {
+  margin: 1rem auto 1.5rem;
+}
+
+.leaderboard-modal-body {
+  display: grid;
+  gap: 0.75rem;
+}
+
 .home-page {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
+}
+
+html[data-theme="dark"] nav {
+  background: rgba(21, 26, 34, 0.75);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+html[data-theme="dark"] nav a:hover {
+  background: rgba(143, 177, 255, 0.261);
+}
+
+html[data-theme="dark"] nav a[aria-current="page"] {
+  background: rgba(143, 177, 255, 0.16);
+  border-color: rgba(143, 177, 255, 0.28);
+}
+
+html[data-theme="dark"] .card,
+html[data-theme="dark"] table,
+html[data-theme="dark"] .card-section,
+html[data-theme="dark"] .game-header,
+html[data-theme="dark"] .intro-card,
+html[data-theme="dark"] .modal-panel {
+  background: rgba(21, 26, 34, 0.92);
+  color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme="dark"] th {
+  background: rgba(143, 177, 255, 0.1);
+}
+
+html[data-theme="dark"] .welcome-message {
+  color: #8fb1ff;
+}
+
+html[data-theme="dark"] .instructions-1 {
+  color: #a6d37b;
+}
+
+html[data-theme="dark"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.62);
+}
+
+@media (max-width: 700px) {
+  .top-bar {
+    justify-content: center;
+  }
+
+  .game-header {
+    justify-content: center;
+  }
+
+  .intro-card {
+    padding: 1.25rem;
+  }
 }
